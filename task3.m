@@ -1,16 +1,15 @@
 clear all
-clc
-size_tensor = 100; % try also 50, HOSVD seems terrible, also i did not try 200 was too slow.
-X = normrnd(0,1, size_tensor, size_tensor, size_tensor);
+size_tensor = 70; % try also 50, HOSVD seems terrible, also i did not try 200 was too slow.
+X = rand(size_tensor, size_tensor, size_tensor);
 T1 = zeros(10,1);
 T2 = zeros(10,1);
 N1 = zeros(10,1);
 N2 = zeros(10,1);
-eps = 0.00001;
+eps = 0.0001;
 for k = 5:5:50
     X = tensor(X);
     tic
-    [C,U1,U2,U3] =  mHOSVD(X,k,eps);
+    [C,U1,U2,U3] =  mHOSVD(X,10,k,k,k,eps);
     T1(k/5) = toc;
     diff = X - ttm(C,{U1,U2,U3},[1 2 3]);
     N1(k/5) = norm(diff); 

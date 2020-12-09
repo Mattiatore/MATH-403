@@ -7,6 +7,8 @@ for i=1:50
     end
 end
 F = tensor(F);
-[C,U1,U2,U3] =  mHOSVD(F,10,0.00001);
+eps = 0.0001;
+k=5;
+[C,U1,U2,U3] =  mHOSVD(F,10,k,k,k,eps);
 diff = F - ttm(C,{U1,U2,U3},[1 2 3]);
 norm(diff)

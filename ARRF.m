@@ -19,5 +19,5 @@ while (max(vecnorm(Y(:,j+1:j+r))) > eps/(10*(2/pi)^(1/2)))
     Qold = Qnew;
 end
 Q = Qnew;
-j
+
 
