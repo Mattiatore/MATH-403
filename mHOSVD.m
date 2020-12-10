@@ -1,23 +1,36 @@
-function [C,U1,U2,U3] = mHOSVD(X,r,k1,k2,k3,eps)
-%UNTITLED 
-%   
-Y = tenmat(X,1).data;
-U1_tilda = ARRF(Y,r,eps);
-Y = tenmat(X,2).data;
-U2_tilda = ARRF(Y,r,eps);
-Y = tenmat(X,3).data;
-U3_tilda = ARRF(Y,r,eps);
+function [C] = mHOSVD(Y, method, rank, eps, oversampling)
+% Y: tensor
+% method: {0, 1}) -- for rank based use 0 [default], for tol based use 1
+% rank: int -- Prescribe rank R [default = 5] (same for each dimension)
+% eps: real -- Prescribe tolerance [default = 1e-5] for tolerance method
+% oversampling: int -- oversample [default = 0] for range method (R + oversampling)
 
-C_tilda = ttm(X,{U1_tilda',U2_tilda',U3_tilda'},[1 2 3]);
-
-T = hosvd(C_tilda,eps,'ranks',[k1,k2,k3]);
-C = T.core;
-U1 = U1_tilda * T.U{1};
-U2 = U2_tilda * T.U{2};
-U3 = U3_tilda * T.U{3};
-%C = C_tilda;
-%U1 = U1_tilda ;
-%U2 = U2_tilda ;
-%U3 = U3_tilda ;
+if (method==1)
+    X = double(tenmat(Y,1));
+    U1_tilda = ARRF(X,eps * norm(Y)/5);
+    X = double(tenmat(Y,2));
+    U2_tilda = ARRF(X,eps * norm(Y)/5);
+    X = double(tenmat(Y,3));
+    U3_tilda = ARRF(X,eps * norm(Y)/5);
+else
+    X = double(tenmat(Y,1));
+    U1_tilda = RRF(X, rank + oversampling);
+    X = double(tenmat(Y,2));
+    U2_tilda = RRF(X, rank + oversampling);
+    X = double(tenmat(Y,3));
+    U3_tilda = RRF(X, rank + oversampling);
 end
 
+C_tilda = ttm(Y,{U1_tilda',U2_tilda',U3_tilda'},[1 2 3]);
+
+if oversampling > 0
+    C = hosvd(C_tilda, 1, 'ranks', ranks, 'sequential', false);
+    U1_tilda = U1_tilda * C.U{1};
+    U2_tilda = U2_tilda * C.U{2};
+    U3_tilda = U3_tilda * C.U{3};
+    C = ttensor(C.core, {U1_tilda,U2_tilda,U3_tilda});
+else
+    C = ttensor(C_tilda, {U1_tilda,U2_tilda,U3_tilda});
+end
+
+return
