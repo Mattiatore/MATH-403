@@ -10,9 +10,9 @@ for j = 1 : trials
         r = rank(i);
         
         tic
-        Tmod = mHOSVD(F, method, r, eps, oversampling);
+        T = mHOSVD(F, method, r, eps, oversampling);
         time(j, i) = toc;
-        err(j, i) = norm(F - full(Tmod)) / norm(F);
+        err(j, i) = norm(F - full(T)) / norm(F);
         
     end
     
