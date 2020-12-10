@@ -1,4 +1,4 @@
-n=99
+n=99;
 F =zeros(n,n,n);
 for i=1:n
     for j=1:n
@@ -8,4 +8,7 @@ for i=1:n
     end
 end
 F = tensor(F);
-[errMHOSVD, timeMHOSVD] = testMHOSVD(F, 1, 0, 1e-5, 0, 1)
+% [errMHOSVD, timeMHOSVD] = testMHOSVD(F, 1, 0, 1e-5, 0, 1)
+% [errHOSVD, timeHOSVD] = testHOSVD(F, 1, 0, 1e-5, 1)
+[errMHOSVD, timeMHOSVD] = testMHOSVD(F, 0, 25, 1e-5, 2, 1)
+[errHOSVD, timeHOSVD] = testHOSVD(F, 0, 25, 1e-5, 1)
