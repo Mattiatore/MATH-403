@@ -1,0 +1,37 @@
+\begin{equation}
+\tilde{\mathcal{C}} = \tilde{U}{1}^{T} \circ{1} \tilde{U}{2}^{T} \circ{2} \tilde{U}{3}^{T} \circ{3} \mathcal{X}
+\end{equation}
+
+From step 6 of the algorithm, we know that
+\begin{equation}
+\tilde{\mathcal{C}} = V_1 \circ_{1} V_2 \circ_{2} V_3 \circ_{3} \mathcal{C}
+\end{equation}
+Thus we have
+\begin{equation}
+    V_1 \circ_{1} V_2 \circ_{2} V_3 \circ_{3} \mathcal{C} = \tilde{U}{1}^{T} \circ{1} \tilde{U}{2}^{T} \circ{2} \tilde{U}{3}^{T} \circ{3} \mathcal{X}
+\end{equation}
+Using the result from Exercise 8, problem 5, we get
+\begin{equation}
+\begin{split}
+    \mathcal{C} &=V_1^{T} \tilde{U}{1}^{T} \circ{1} V_2^{T}\tilde{U}{2}^{T} \circ{2} V_3^{T}\tilde{U}{3}^{T} \circ{3} \mathcal{X}\\
+    & = U_1^{T} \circ_{1} U_2^{T} \circ_{2} U_3^{T} \circ_{3} \mathcal{X}
+\end{split}
+\end{equation}
+
+\begin{equation}
+\text { Orthogonal projection } \tilde{\mathcal{X}}:=\left(\pi_{1} \circ \pi_{2} \circ \pi_{3}\right) \mathcal{X} \text { with } \pi_{\mu} \mathcal{X}:=U_{\mu} U_{\mu}^{T} \circ_{\mu} \mathcal{X}
+\end{equation}
+
+\begin{equation}
+\left\|\mathcal{X}-U_{1} \circ_{1} U_{2} \circ_{3} U_{3} \circ_{3} \mathcal{C}\right\|_{F}
+\end{equation}
+
+\begin{equation}
+\begin{aligned}
+\|\mathcal{X}-\tilde{\mathcal{X}}\|^{2}=&\left\|\mathcal{X}-\left(\pi_{1} \circ \pi_{2} \circ \pi_{3}\right) \mathcal{X}\right\|^{2} \\
+=&\left\|\mathcal{X}-\pi_{1} \mathcal{X}\right\|^{2}+\left\|\pi_{1} \mathcal{X}-\left(\pi_{1} \circ \pi_{2}\right) \mathcal{X}\right\|^{2}+\cdots \\
+& \cdots+\left\|\left(\pi_{1} \circ \pi_{2}\right) \mathcal{X}-\left(\pi_{1} \circ \pi_{2} \circ \pi_{3}\right) \mathcal{X}\right\|^{2} \\
+\leq &\left\|\left(I-U_{1} U_{1}^{T}\right) X^{(1)}\right\|{F}^{2} +\left\|\left(I-U{2} U_{2}^{T}\right) X^{(2)}\right\|{F}^{2} +\left\|\left(I-U{3} U_{3}^{T}\right) X^{(3)}\right\|_{F}^{2}
+\leq & 3\epsilon^2
+\end{aligned}
+\end{equation}
