@@ -20,10 +20,10 @@ for j = 1 : trials
     for i = 1 : lung
         
         tic
-        if (method==1)
-            T = hosvd(F, eps(i), 'verbosity', 0, 'sequential', false);
+        if (method==0)
+            T = naiveHOSVD(F, method, rank(i) * ones(1, 3), 0);
         else
-            T = hosvd(F, 1, 'ranks', rank(i) * ones(1, 3), 'verbosity', 0, 'sequential', false);
+            T = naiveHOSVD(F, method, 0, eps(i));
         end
         time(j, i) = toc;
         err(j, i) = norm(full(T) - F) / norm(F);
