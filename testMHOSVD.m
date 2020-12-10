@@ -1,11 +1,18 @@
 function [err, time] = testMHOSVD(F, method, rank, eps, oversampling, trials)
 
-time = zeros(trials, max(length(eps),length(rank)));
-err = time;
+if (method==1)
+    time = zeros(trials,length(eps));
+    err = time;
+    lung = length(eps);
+else
+    time = zeros(trials,length(rank));
+    err = time;
+    lung = length(rank);
+end
 
 for j = 1 : trials
 
-    for i = 1 : length(rank)
+    for i = 1 : lung
         
         r = rank(i);
         

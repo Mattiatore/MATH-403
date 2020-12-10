@@ -6,11 +6,11 @@ function [err, time] = testHOSVD(F, method, rank, eps, trials)
 % trials: int -- number of different runs
 
 if (method==1)
-    time = zeros(length(eps));
+    time = zeros(trials, length(eps));
     err = time;
     lung = length(eps);
 else
-    time = zeros(length(rank));
+    time = zeros(trials, length(rank));
     err = time;
     lung = length(rank);
 end
