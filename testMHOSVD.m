@@ -1,4 +1,9 @@
 function [err, time] = testMHOSVD(F, method, rank, eps, oversampling, trials)
+% F: tensor
+% method: {0, 1}) -- for rank based use 0 , for tol based use 1
+% rank: int -- Prescribe rank R (same for each dimension)
+% eps: real -- Prescribe tolerance for tolerance method
+% trials: int -- number of different runs
 
 if (method==1)
     time = zeros(trials,length(eps));

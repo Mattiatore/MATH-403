@@ -19,16 +19,14 @@ for j = 1 : trials
 
     for i = 1 : lung
         
-        r = rank(i);
-        
         tic
         if (method==1)
-            T = hosvd(F, eps(i), 'sequential', false, 'verbosity', 0);
+            T = hosvd(F, eps(i), 'verbosity', 0, 'sequential', false);
         else
-            T = hosvd(F, 1, 'ranks', rank(i) * ones(1, 3), 'sequential', false, 'verbosity', 0);
+            T = hosvd(F, 1, 'ranks', rank(i) * ones(1, 3), 'verbosity', 0, 'sequential', false);
         end
         time(j, i) = toc;
-        err(j, i) = norm(F - full(T)) / norm(F);
+        err(j, i) = norm(full(T) - F) / norm(F);
         
     end
     

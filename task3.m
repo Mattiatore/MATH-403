@@ -1,14 +1,14 @@
 clc; clear; close all
 
-size_tensor = 200; % try also 100
-X = tensor(normrnd(0,1, size_tensor, size_tensor, size_tensor));
+size_tensor = 200;
+X = tensor(rand(size_tensor, size_tensor, size_tensor));
 ranks = 5:5:50;
 
 % HOSVD
 [errHOSVD, timeHOSVD] = testHOSVD(X, 0, ranks, 0, 1);
 
 % MHOSVD
-[errMHOSVD, timeMHOSVD] = testMHOSVD(X, 0, ranks, eps, 25, 1); % change oversampling "25" if using smaller sized tensor
+[errMHOSVD, timeMHOSVD] = testMHOSVD(X, 0, ranks, eps, 10, 1);
 
 figure(1)
 semilogy(ranks, errMHOSVD, 'k-o', 'markersize', 9)
