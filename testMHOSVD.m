@@ -22,9 +22,13 @@ for j = 1 : trials
         r = rank(i);
         
         tic
-        T = mHOSVD(F, method, r, eps, oversampling);
+        [T,U1,U2,U3] = mHOSVD(F, method, r, eps, oversampling);
         time(j, i) = toc;
-        err(j, i) = norm(F - full(T)) / norm(F);
+        T = ttm(T,U1,1);
+        T = ttm(T,U2,2);
+        T = ttm(T,U3,3);
+        error= F-T;
+        err(j, i) = sqrt(sum(sum(sum(error.*error))) / sum(sum(sum(F.*F))));
         
     end
     

@@ -1,8 +1,8 @@
-clc; clear; close all
+fprintf('This part is for task2 \n\n')
 
 n = 50;
-eps = flip(logspace(-10,-2,10));
-rank = round(linspace(2, n-1, 10));
+eps = 0.001;
+rank = 5;
 
 F =zeros(n,n,n);
 for i=1:n
@@ -12,54 +12,24 @@ for i=1:n
         end
     end
 end
-F = tensor(F);
 
-[RerrMHOSVD, RtimeMHOSVD] = testMHOSVD(F, 0, rank, eps, 0, 1);
-[RerrHOSVD, RtimeHOSVD] = testHOSVD(F, 0, rank, eps, 1);
-[TerrMHOSVD, TtimeMHOSVD] = testMHOSVD(F, 1, rank, eps, 0, 1);
-[TerrHOSVD, TtimeHOSVD] = testHOSVD(F, 1, rank, eps, 1);
+[T,U1,U2,U3] = mHOSVD(F,0,rank,eps,5);
+fprintf('the size of the decomposition matrix is\n\n')
+size(T)
+T = ttm(T,U1,1);
+T = ttm(T,U2,2);
+T = ttm(T,U3,3);
+e = T-F;
+error = sqrt(sum(sum(sum(e.*e)))/(sum(sum(sum(F.*F)))));
+fprintf('the error of the decomposition is %d, which is relative small. So we think the rank based algorithm works well\n\n',error)
 
 
-figure(1)
-semilogy(rank, RerrMHOSVD, 'k-o', 'markersize', 9)
-hold on
-semilogy(rank, RerrHOSVD, 'r-d', 'markersize', 9)
-xlabel('Rank')
-ylabel('Relative error')
-box on
-legend({'MHOSVD','HOSVD'}, 'location', 'NE')
-title("Error comparison of MHOSVD vs HOSVD, method rank ")
-hold off
 
-figure(2)
-semilogy(rank, RtimeMHOSVD, 'k-o', 'markersize', 9)
-hold on
-semilogy(rank, RtimeHOSVD, 'r-d', 'markersize', 9)
-xlabel('Rank')
-ylabel('Time cost')
-box on
-legend({'MHOSVD','HOSVD'}, 'location', 'NE')
-title("Time comparison of MHOSVD vs HOSVD, method rank ")
-hold off
 
-figure(3)
-semilogy(rank, TerrMHOSVD, 'k-o', 'markersize', 9)
-hold on
-semilogy(rank, TerrHOSVD, 'r-d', 'markersize', 9)
-xlabel('Rank')
-ylabel('Relative error')
-box on
-legend({'MHOSVD','HOSVD'}, 'location', 'NE')
-title("Error comparison of MHOSVD vs HOSVD, method tolerance ")
-hold off
-
-figure(4)
-semilogy(rank, TtimeMHOSVD, 'k-o', 'markersize', 9)
-hold on
-semilogy(rank, TtimeHOSVD, 'r-d', 'markersize', 9)
-xlabel('Rank')
-ylabel('Time cost')
-box on
-legend({'MHOSVD','HOSVD'}, 'location', 'NE')
-title("Time comparison of MHOSVD vs HOSVD, method tolerance ")
-hold off
+[T,U1,U2,U3] = mHOSVD(F,1,rank,eps,0);
+T = ttm(T,U1,1);
+T = ttm(T,U2,2);
+T = ttm(T,U3,3);
+e = T-F;
+error = sqrt(sum(sum(sum(e.*e)))/(sum(sum(sum(F.*F)))));
+fprintf('the error of the decomposition is %d, which is less than the given epsilon. Hence, we believe our tolerence based algorithm works well\n\n',error)

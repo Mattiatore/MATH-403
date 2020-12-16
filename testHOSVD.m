@@ -21,13 +21,17 @@ for j = 1 : trials
         
         tic
         if (method==0)
-            T = naiveHOSVD(F, method, rank(i) * ones(1, 3), 0);
+            [T,U1,U2,U3] = hosvd(F, method, rank(i) *ones(3), 0);
         else
-            T = naiveHOSVD(F, method, 0, eps(i));
+            [T,U1,U2,U3] = hosvd(F, method, 0, eps(i));
         end
         time(j, i) = toc;
-        err(j, i) = norm(full(T) - F) / norm(F);
-        
+        T = ttm(T,U1,1);
+        T = ttm(T,U2,2);
+        T = ttm(T,U3,3);
+        error = T-F;
+        err(j, i) =sqrt(sum(sum(sum(error.*error))) / sum(sum(sum(F.*F))));
+        fprintf('calculated  %i-th iteration \n',i)
     end
     
 end
