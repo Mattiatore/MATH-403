@@ -5,13 +5,14 @@ function [C_tilda,U1_tilda,U2_tilda,U3_tilda] = mHOSVD(Y, method, rank, eps, ove
 % eps: real -- Prescribe tolerance for tolerance method
 % oversampling: int -- oversample for range method (R + oversampling)
 
+norm = sqrt(sum(sum(sum(Y.*Y))));
 if (method==1)
     X = double(tenmat(Y,1));
-    U1_tilda = ARRF(X,eps * sum(sum(sum(Y.*Y)))/5);
+    U1_tilda = ARRF(X,eps * norm/5);
     X = double(tenmat(Y,2));
-    U2_tilda = ARRF(X,eps * sum(sum(sum(Y.*Y)))/5);
+    U2_tilda = ARRF(X,eps * norm/5);
     X = double(tenmat(Y,3));
-    U3_tilda = ARRF(X,eps * sum(sum(sum(Y.*Y)))/5);
+    U3_tilda = ARRF(X,eps * norm/5);
 else
     X = double(tenmat(Y,1));
     U1_tilda = RRF(X, rank + oversampling);

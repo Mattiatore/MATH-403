@@ -31,7 +31,7 @@ for j = 1 : trials
         T = ttm(T,U3,3);
         error = T-F;
         err(j, i) =sqrt(sum(sum(sum(error.*error))) / sum(sum(sum(F.*F))));
-        fprintf('calculating  %i rank decomposition \n',5*i)
+        fprintf('calculating  %i rank approximation \n',5*i)
     end
     
 end

@@ -1,4 +1,4 @@
-fprintf('This part is for task3, the result will be given after 10 iterations \n')
+fprintf('Next we go to task3, the result will be given after 10 iterations \n')
 
 size_tensor = 200;
 X = (rand(size_tensor, size_tensor, size_tensor));
